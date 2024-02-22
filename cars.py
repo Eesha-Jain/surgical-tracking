@@ -1,7 +1,7 @@
 import cv2
 import numpy as np 
 
-cap = cv2.VideoCapture("./cars_video.mp4")
+cap = cv2.VideoCapture("./surgical-tracking/cars_video.mp4")
 
 ### CREATE BACKGROUND OBJECT
 backgroundObject = cv2.createBackgroundSubtractorMOG2(history=2) #remove the background, grayscale, MOG2 can detect shadows+objects
