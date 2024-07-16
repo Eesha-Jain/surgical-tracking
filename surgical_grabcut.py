@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 
 ### READ VIDEO
-cap = cv2.VideoCapture("./train-selected/16.mp4")
+cap = cv2.VideoCapture("./train-selected/c7v1.mp4")
 
 ### ITERATE THROUGH EACH FRAME
 while True:
@@ -42,16 +42,19 @@ while True:
     contours, _ = cv2.findContours(mask_gray, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
     ### DRAW BOX AROUND METAL INSTRUMENTS
+    frameCopy = frame.copy()
     for cnt in contours:
         area = cv2.contourArea(cnt)
         if area > 3000:
-            cv2.drawContours(frame, [cnt], -1, (0,255,0), 3)
+            #cv2.drawContours(frameCopy, [cnt], -1, (0,255,0), 3)
+            x, y, width, height = cv2.boundingRect(cnt)
+            cv2.rectangle(frameCopy, (x,y), (x+width, y+height), (0,0,255), 2)
 
     ### CREATE BLACK BACKGROUND WITH INSTRUMENTS
     foreground = cv2.bitwise_and(frame, frame, mask=mask_gray)
 
     ### STACK ONLY THE BOTTOM ROW OF IMAGES SIDE BY SIDE
-    bottom_row_frame = frame[frame.shape[0]//2:, :]
+    bottom_row_frame = frameCopy[frameCopy.shape[0]//2:, :]
     bottom_row_foreground = foreground[frame.shape[0]//2:, :]
     stacked = np.hstack((bottom_row_frame, bottom_row_foreground))
 

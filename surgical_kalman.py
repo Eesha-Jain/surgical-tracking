@@ -4,7 +4,7 @@ import cv2
 import numpy as np
 
 ### READ VIDEO
-cap = cv2.VideoCapture("./train-selected/2.mp4")
+cap = cv2.VideoCapture("./train-selected/c7v1.mp4")
 
 ### KALMAN FILTER INITIALIZATION
 kalman = cv2.KalmanFilter(4, 2)  # 4 states (x, y, dx, dy), 2 measurements (x, y)
